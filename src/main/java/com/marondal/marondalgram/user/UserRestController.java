@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marondal.marondalgram.user.domain.User;
 import com.marondal.marondalgram.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/user")
 @RestController
@@ -50,6 +54,34 @@ public class UserRestController {
 		Map<String, Boolean> resultMap = new HashMap<>();
 		
 		resultMap.put("isDuplicate", isDuplicate);
+		
+		return resultMap;
+		
+	}
+	
+	@PostMapping("/login")
+	public Map<String, String> login(
+			@RequestParam("loginId") String loginId
+			, @RequestParam("password") String password
+			, HttpServletRequest request) {
+		
+		User user = userService.getUserByLoginIdAndPassword(loginId, password);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		
+		if(user != null) {
+			// 로그인 성공
+			resultMap.put("result", "success");
+			HttpSession session = request.getSession();
+			
+			// 사용자 정보를 세션에 저장한다
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userLoginId", user.getLoginId());
+			
+		} else {
+			// 로그인 실패
+			resultMap.put("result", "fail");
+		}
 		
 		return resultMap;
 		
