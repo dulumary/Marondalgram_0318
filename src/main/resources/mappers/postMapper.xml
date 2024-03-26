@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.marondal.marondalgram.post.repository.PostRepository">
+	<insert id="insertPost" parameterType="map">
+		INSERT INTO 
+			`post`
+		(
+			`userId`
+			, `contents`
+			, `imagePath`
+		)
+		VALUE
+		(
+			#{userId}
+			, #{contents}
+			, #{imagePath}
+		)
+		
+	
+	</insert>
+	
+	<select id="selectPostList"
+	resultType="com.marondal.marondalgram.post.domain.Post">
+		SELECT 
+			`id`
+			, `userId`
+			, `contents`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`post`
+		ORDER BY 
+			`id` DESC
+	</select>
+
+</mapper>

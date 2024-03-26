@@ -37,5 +37,11 @@ public class UserService {
 		
 		return userRepository.selectUserByLoginIdAndPassword(loginId, encryptPassword);
 	}
+	
+	
+	public User getUser(int id) {
+		return userRepository.selectUser(id);
+	}
+	
 
 }

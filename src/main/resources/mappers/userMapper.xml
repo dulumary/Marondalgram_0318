@@ -51,5 +51,23 @@
 			`loginId` = #{loginId}
 			AND `password` = #{password}
 	</select>
+	
+	<select id="selectUser" parameterType="int"
+	resultType="com.marondal.marondalgram.user.domain.User">
+		SELECT 
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM 
+			`user`
+		WHERE 
+			`id` = #{id}
+	
+	</select>
+	
 
 </mapper>
