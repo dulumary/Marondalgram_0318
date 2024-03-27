@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>타임라인</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 <link rel="stylesheet" href="/static/css/style.css" type="text/css">
 
@@ -21,7 +22,8 @@
 				<div class="input-box border rounded">
 					<textarea rows="4" class="form-control border-0" id="contentsInput"></textarea>
 					<div class="d-flex justify-content-between p-2">
-						<input type="file" id="fileInput">
+						<i class="bi bi-image big-font" id="imageIcon"></i>
+						<input type="file" id="fileInput" class="d-none">
 						<button type="button" class="btn btn-info btn-sm" id="saveBtn">입력</button>
 					</div>
 					
@@ -41,7 +43,7 @@
 							<img class="w-100" src="${post.imagePath }">
 						</div>
 						<div class="p-2">
-							<i class="bi bi-heart"></i>
+							<i class="bi bi-heart like-icon"></i>
 							좋아요 11개
 						</div>
 						
@@ -80,6 +82,17 @@
 
 <script>
 	$(document).ready(function() {
+		
+		$(".like-icon").on("click", function() {
+			
+			// 좋아요한 대상 게시글 pk
+			
+			
+		});
+		
+		$("#imageIcon").on("click", function() {
+			$("#fileInput").click();
+		});
 		
 		$("#saveBtn").on("click", function() {
 			
