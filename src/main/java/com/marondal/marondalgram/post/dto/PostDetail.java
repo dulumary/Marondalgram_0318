@@ -11,6 +11,12 @@ public class PostDetail {
 	private int userId;
 	private String userLoginId;
 	
+	private int likeCount;
+	
+	// 로그인한 사용자의 좋아요 여부
+	
+	// 댓글 목록
+	
 	
 	public int getId() {
 		return id;
@@ -41,6 +47,12 @@ public class PostDetail {
 	}
 	public void setUserLoginId(String userLoginId) {
 		this.userLoginId = userLoginId;
+	}
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 	
 	
