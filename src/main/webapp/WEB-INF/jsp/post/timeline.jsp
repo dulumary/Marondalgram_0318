@@ -43,7 +43,7 @@
 							<img class="w-100" src="${post.imagePath }">
 						</div>
 						<div class="p-2">
-							<i class="bi bi-heart like-icon"></i>
+							<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
 							좋아요 11개
 						</div>
 						
@@ -58,8 +58,8 @@
 								<div><b>hohoho</b> 누구 고야이에요?</div>
 							</div>
 							<div class="d-flex justify-content-between">
-								<input type="text" class="form-control col-10">
-								<button type="button" class="btn btn-info col-2">게시</button>
+								<input type="text" class="form-control col-10" id="commentInput${post.id }">
+								<button type="button" class="btn btn-info col-2 comment-btn" data-post-id="${post.id }">게시</button>
 							</div>
 						</div>
 					</div>
@@ -83,9 +83,59 @@
 <script>
 	$(document).ready(function() {
 		
+		$(".comment-btn").on("click", function() {
+			
+			let id = $(this).data("post-id");
+			
+			// 버튼 옆에 있는 인풋태그 객체화
+			// 1. 이벤트가 발생한 버튼 태그 옆에 있는 태그를 개체화 
+			
+			// let comment = $(this).prev().val();
+			
+			// 2. 버튼태그가 가진 데이터를 이용해서 input 태그에 id 부여 
+			
+			let comment = $("#commentInput" + id).val();
+			
+			$.ajax({
+				type:"post"
+				, url:"/post/comment/create"
+				, data:{"postId":id , "contents":comment}
+				, success:function(data) {
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("댓글입력 실패");
+					}
+				}
+				, error:function() {
+					alert("댓글입력 에러");
+				}
+			});
+			
+			
+		});
+		
 		$(".like-icon").on("click", function() {
 			
 			// 좋아요한 대상 게시글 pk
+			// data-post-id
+			let id = $(this).data("post-id");
+			
+			$.ajax({
+				type:"post"
+				, url:"/post/like"
+				, data:{"postId":id}
+				, success:function(data) {
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("좋아요 실패");
+					}
+				}
+				, error:function() {
+					alert("좋아요 에러")
+				}
+			});
 			
 			
 		});
