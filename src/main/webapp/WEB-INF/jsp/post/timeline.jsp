@@ -62,8 +62,9 @@
 						<div class="comment-box">
 							<div class="pl-2">댓글</div>
 							<div class="p-2">
-								<div><b>leeele</b> 진짜 귀엽네</div>
-								<div><b>hohoho</b> 누구 고야이에요?</div>
+								<c:forEach var="comment" items="${post.commentList }">
+								<div><b>${comment.userLoginId }</b> ${comment.contents }</div>
+								</c:forEach>
 							</div>
 							<div class="d-flex justify-content-between">
 								<input type="text" class="form-control col-10" id="commentInput${post.id }">

@@ -1,5 +1,9 @@
 package com.marondal.marondalgram.post.dto;
 
+import java.util.List;
+
+import com.marondal.marondalgram.comment.dto.CommentDetail;
+
 public class PostDetail {
 	
 	// 게시글 정보
@@ -17,7 +21,7 @@ public class PostDetail {
 	private boolean isLike;
 	
 	// 댓글 목록
-	
+	private List<CommentDetail> commentList;
 	
 	public int getId() {
 		return id;
@@ -62,7 +66,13 @@ public class PostDetail {
 	public void setLike(boolean isLike) {
 		this.isLike = isLike;
 	}
-	
+	public List<CommentDetail> getCommentList() {
+		return commentList;
+	}
+	public void setCommentList(List<CommentDetail> commentList) {
+		this.commentList = commentList;
+	}
+
 	
 
 }

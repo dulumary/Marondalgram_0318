@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.marondal.marondalgram.comment.dto.CommentDetail;
+import com.marondal.marondalgram.comment.service.CommentService;
 import com.marondal.marondalgram.common.FileManager;
 import com.marondal.marondalgram.like.service.LikeService;
 import com.marondal.marondalgram.post.domain.Post;
@@ -26,6 +28,9 @@ public class PostService {
 	
 	@Autowired
 	private LikeService likeService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 	public int addPost(int userId, String contents, MultipartFile imageFile) {
 		
@@ -49,6 +54,9 @@ public class PostService {
 			// 게시글에 로그인한 사용자가 좋아요를 했는지 여부 
 			boolean isLike = likeService.isLikeByUserIdAndPostId(loginUserId, post.getId());
 			
+			// 게시글별 댓글 목록 
+			List<CommentDetail> commentList = commentService.getCommentListByPostId(post.getId());
+			
 			PostDetail postDetail = new PostDetail();	
 			postDetail.setId(post.getId());
 			postDetail.setContents(post.getContents());
@@ -57,7 +65,7 @@ public class PostService {
 			postDetail.setUserLoginId(user.getLoginId());
 			postDetail.setLikeCount(likeCount);
 			postDetail.setLike(isLike);
-			
+			postDetail.setCommentList(commentList);
 			postDetailList.add(postDetail);
 			
 		}
