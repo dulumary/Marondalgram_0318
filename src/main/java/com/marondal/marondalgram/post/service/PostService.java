@@ -34,7 +34,7 @@ public class PostService {
 		return postRepository.insertPost(userId, contents, imagePath);
 	}
 	
-	public List<PostDetail> getPostList() {
+	public List<PostDetail> getPostList(int loginUserId) {
 		List<Post> postList = postRepository.selectPostList();
 		
 		List<PostDetail> postDetailList = new ArrayList<>();
@@ -46,6 +46,9 @@ public class PostService {
 			// 게시글 좋아요 개수 
 			int likeCount = likeService.getLikeCount(post.getId());
 			
+			// 게시글에 로그인한 사용자가 좋아요를 했는지 여부 
+			boolean isLike = likeService.isLikeByUserIdAndPostId(loginUserId, post.getId());
+			
 			PostDetail postDetail = new PostDetail();	
 			postDetail.setId(post.getId());
 			postDetail.setContents(post.getContents());
@@ -53,7 +56,7 @@ public class PostService {
 			postDetail.setUserId(post.getUserId());
 			postDetail.setUserLoginId(user.getLoginId());
 			postDetail.setLikeCount(likeCount);
-			
+			postDetail.setLike(isLike);
 			
 			postDetailList.add(postDetail);
 			

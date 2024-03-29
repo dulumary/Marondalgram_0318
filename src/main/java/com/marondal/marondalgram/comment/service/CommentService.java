@@ -23,9 +23,4 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-	// 특정 게시글의 댓글 목록 돌려주는 기능
-	public getCommentListByPostId(int postId) {
-		
-	}
-
 }

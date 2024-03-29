@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.marondal.marondalgram.post.dto.PostDetail;
 import com.marondal.marondalgram.post.service.PostService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class PostController {
 	
@@ -17,9 +19,13 @@ public class PostController {
 	private PostService postService;
 	
 	@GetMapping("/post/timeline-view")
-	public String memoList(Model model) {
+	public String memoList(
+			Model model
+			, HttpSession session) {
 		
-		List<PostDetail> postList = postService.getPostList();
+		int userId = (Integer)session.getAttribute("userId");
+		
+		List<PostDetail> postList = postService.getPostList(userId);
 		
 		model.addAttribute("postList", postList);
 		

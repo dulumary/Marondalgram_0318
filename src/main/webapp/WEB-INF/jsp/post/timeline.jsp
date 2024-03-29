@@ -43,7 +43,15 @@
 							<img class="w-100" src="${post.imagePath }">
 						</div>
 						<div class="p-2">
-							<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
+							<c:choose>
+								<c:when test="${post.like }">
+									<i class="bi bi-heart-fill text-danger"></i>
+								</c:when>
+								<c:otherwise>
+									<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
+								</c:otherwise>
+							</c:choose>
+							
 							좋아요 ${post.likeCount }개
 						</div>
 						
