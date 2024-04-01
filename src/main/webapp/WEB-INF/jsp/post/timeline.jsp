@@ -45,7 +45,7 @@
 						<div class="p-2">
 							<c:choose>
 								<c:when test="${post.like }">
-									<i class="bi bi-heart-fill text-danger"></i>
+									<i class="bi bi-heart-fill text-danger unlik-icon" data-post-id="${post.id }" ></i>
 								</c:when>
 								<c:otherwise>
 									<i class="bi bi-heart like-icon" data-post-id="${post.id }"></i>
@@ -85,12 +85,56 @@
 	</div>
 
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#moreModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="moreModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body text-center">
+        <a href="#"> 삭제하기 </a>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
 <script>
 	$(document).ready(function() {
+		
+		
+		$(".unlik-icon").on("click", function() {
+			
+			let id = $(this).data("post-id");
+			
+			$.ajax({
+				type:"delete"
+				, url:"/post/unlike"
+				, data:{"postId":id}
+				, success:function(data) {
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("좋아요 취소 실패");
+					}
+				}
+				, error:function() {
+					alert("좋아요 취소 에러");
+				}
+				
+			});
+			
+			
+		});
+		
 		
 		$(".comment-btn").on("click", function() {
 			
