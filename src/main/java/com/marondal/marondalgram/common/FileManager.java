@@ -55,5 +55,51 @@ public class FileManager {
 		return "/images" + directoryName + "/" + file.getOriginalFilename();
 		
 	}
+	
+	public static boolean removeFile(String filePath) {  // /images/2_1711355716057/steak-3640560_640.jpg
+		
+		if(filePath == null) {
+			return false;
+		}
+		
+		//   D:\dulumaryT\web\231122\springProject\ upload\memo\2_1711355716057\steak-3640560_640.jpg
+		// 삭제 대상 경로 
+		String fullFilePath = FILE_UPLOAD_PATH + filePath.replace("/images", "");
+		
+		Path path = Paths.get(fullFilePath);
+		
+		// 파일이 존재하는지
+		if(Files.exists(path)) {
+			
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+		}
+		
+//   D:\dulumaryT\web\231122\springProject\ upload\memo\2_1711355716057
+		
+		Path dirPath = path.getParent();
+		
+		if(Files.exists(dirPath)) {
+			
+			try {
+				Files.delete(dirPath);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+				return false;
+			}
+			
+		}
+		
+		
+		return true;
+		
+	}
 
 }

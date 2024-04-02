@@ -37,7 +37,10 @@
 					<div class="card my-3">
 						<div class="d-flex justify-content-between p-2">
 							<div>${post.userLoginId }</div>
-							<i class="bi bi-three-dots-vertical"></i>
+							<%-- 로그인한 사용자가 작성한 게시글일 경우  --%>
+							<c:if test="${userId eq post.userId }">
+							<i class="bi bi-three-dots-vertical more-btn" data-post-id="${post.id }"  data-toggle="modal" data-target="#moreModal"></i>
+							</c:if>
 						</div>
 						<div>
 							<img class="w-100" src="${post.imagePath }">
@@ -96,7 +99,7 @@
     <div class="modal-content">
       
       <div class="modal-body text-center">
-        <a href="#"> 삭제하기 </a>
+        <a href="#" id="deleteBtn" > 삭제하기 </a>
       </div>
      
     </div>
@@ -110,6 +113,37 @@
 <script>
 	$(document).ready(function() {
 		
+		$("#deleteBtn").on("click", function() {
+			
+			let id = $(this).data("post-id");
+			
+			$.ajax({
+				type:"delete"
+				, url:"/post/delete"
+				, data:{"id":id}
+				, success:function(data) {
+					if(data.result == "success") {
+						location.reload();
+					} else {
+						alert("삭제 실패");
+					}
+				}
+				, error:function() {
+					alert("삭제 에러");
+				}
+			});
+		});
+		
+		
+		$(".more-btn").on("click", function() {
+			let id = $(this).data("post-id");
+			
+			// 삭제 버튼에 data-post-id에 해당하는 postId 값을 저장
+			$("#deleteBtn").data("post-id", id);
+			
+			
+			
+		});
 		
 		$(".unlik-icon").on("click", function() {
 			

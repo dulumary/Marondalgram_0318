@@ -73,5 +73,23 @@ public class PostService {
 		
 		
 	}
+	
+	public int deletePost(int userId, int id) {
+		
+		// 로그인한 사용자가 작성한 게시글이 아닌 경우 
+		Post post = postRepository.selectPost(id);
+		if(userId != post.getUserId()) {
+			return -1;
+		}
+		
+		FileManager.removeFile(post.getImagePath());
+		
+		likeService.deleteLikeByPostId(id);
+		commentService.deleteCommentByPostId(id);
+	
+		return postRepository.deletePost(id);
+	}
+	
+	
 
 }
