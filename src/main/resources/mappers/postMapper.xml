@@ -22,7 +22,7 @@
 	
 	</insert>
 	
-	<select id="selectPostList"
+	<select id="selectPostList" parameterType="integer"
 	resultType="com.marondal.marondalgram.post.domain.Post">
 		SELECT 
 			`id`
@@ -33,6 +33,10 @@
 			, `updatedAt`
 		FROM 
 			`post`
+		<if test="id != null">
+		WHERE
+			`id` = #{id}
+		</if>
 		ORDER BY 
 			`id` DESC
 	</select>

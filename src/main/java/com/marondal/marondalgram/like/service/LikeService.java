@@ -45,14 +45,14 @@ public class LikeService {
 	}
 	
 	public Like deleteLike(int userId, int postId) {
-//		Optional<Like> optionalLike = likeRepository.findByUserIdAndPostId(userId, postId);
-//		Like like = optionalLike.orElse(null);
-//		
-//		likeRepository.delete(like);
+		Optional<Like> optionalLike = likeRepository.findByUserIdAndPostId(userId, postId);
+		Like like = optionalLike.orElse(null);
 		
-		likeRepository.deleteByUserIdAndPostId(userId, postId);
+		likeRepository.delete(like);
+		
+//		likeRepository.deleteByUserIdAndPostId(userId, postId);
 				
-		return new Like();
+		return like;
 		
 	}
 	

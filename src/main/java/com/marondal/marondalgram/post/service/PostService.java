@@ -3,6 +3,8 @@ package com.marondal.marondalgram.post.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +34,8 @@ public class PostService {
 	@Autowired
 	private CommentService commentService;
 	
+	private Logger logger = LoggerFactory.getLogger(getClass());	
+	
 	public int addPost(int userId, String contents, MultipartFile imageFile) {
 		
 		String imagePath = FileManager.saveFile(userId, imageFile);
@@ -39,8 +43,9 @@ public class PostService {
 		return postRepository.insertPost(userId, contents, imagePath);
 	}
 	
-	public List<PostDetail> getPostList(int loginUserId) {
-		List<Post> postList = postRepository.selectPostList();
+	public List<PostDetail> getPostList(Integer id, int loginUserId) {
+		
+		List<Post> postList = postRepository.selectPostList(id);
 		
 		List<PostDetail> postDetailList = new ArrayList<>();
 		
@@ -79,13 +84,24 @@ public class PostService {
 		// 로그인한 사용자가 작성한 게시글이 아닌 경우 
 		Post post = postRepository.selectPost(id);
 		if(userId != post.getUserId()) {
+			
+			// 삭제 대상이 잘못되었다. 
+			logger.error("삭제 대상의 게시물의 작성자가 아닙니다! + " + userId);
+			
 			return -1;
 		}
 		
 		FileManager.removeFile(post.getImagePath());
 		
+		// 파일 삭제 완료
+		logger.info("파일 삭제 완료");
+		
 		likeService.deleteLikeByPostId(id);
+		// 좋아요 삭제 완료
+		logger.info("좋아요 삭제 완료");
 		commentService.deleteCommentByPostId(id);
+		// 댓글 삭제 완료
+		logger.info("댓글 삭제 완료");
 	
 		return postRepository.deletePost(id);
 	}
