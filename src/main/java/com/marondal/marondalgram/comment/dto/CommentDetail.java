@@ -8,6 +8,7 @@ import lombok.Getter;
 public class CommentDetail {
 	
 	private int id;
+	
 	private String contents;
 	
 	private int userId;
