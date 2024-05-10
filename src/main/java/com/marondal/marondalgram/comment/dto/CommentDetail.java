@@ -12,6 +12,9 @@ public class CommentDetail {
 	private String contents;
 	
 	private int userId;
+	
+	
+	
 	private String userLoginId;
 
 }
