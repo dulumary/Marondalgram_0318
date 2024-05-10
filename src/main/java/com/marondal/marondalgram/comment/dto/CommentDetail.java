@@ -15,6 +15,10 @@ public class CommentDetail {
 	
 	
 	
+	
+	
+	
+	
 	private String userLoginId;
 
 }
